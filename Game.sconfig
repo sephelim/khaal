@@ -1,0 +1,13 @@
+; Must use tabs, not spaces!
+
+[Selenium]
+mode=Debug
+fatality_level=All
+
+[Game]
+title=Khaal: The Cradle of Humanity
+	short=Khaal
+author=Israfil Argos
+description=An isometric RTS inspired by Age of Empires.
+keywords=rts, isometric, khaal, israfil argos, leto, selenium, modistan, khadim, jzhadme, vitiri
+license=AGPLv3
