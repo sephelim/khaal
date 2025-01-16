@@ -1,6 +1,11 @@
-out vec4 FragColor;
+#version 300 es
+
+// The color of the vertex in normalized RGB values.
+in lowp vec4 fragment_color;
+
+out lowp vec4 FragmentColor;
 
 void main()
 {
-    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+    FragmentColor = fragment_color;
 }
