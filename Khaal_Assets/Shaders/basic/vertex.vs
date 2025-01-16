@@ -9,8 +9,10 @@ out vec4 fragment_color;
 
 uniform mat4 m4_projection_matrix;
 uniform mat4 m4_view_matrix;
+// Matrix to apply individual tiles's position transformations
+uniform mat4 m4_model_matrix;
 
 void main() {
   fragment_color = color;
-  gl_Position = m4_projection_matrix * position;
+  gl_Position = m4_projection_matrix * m4_model_matrix * position;
 }

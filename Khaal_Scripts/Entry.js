@@ -52,9 +52,20 @@ export async function Main() {
 
         // Tell WebGL how to pull out the positions from the position
         // buffer into the vertexPosition attribute.
-
         Selenium.Graphics.Shaders.Use('basic');
-        GL.drawArrays(GL.TRIANGLES, 0, 6);
+        for (let y = 0; y < 10; y++) {
+            for (let x = 0; x < 10; x++) {
+                let transformVector = GLMatrix.Vec3.fromValues(x * 100, y * 100, 0)
+                const model_matrix = GLMatrix.Mat4.create();
+
+                GLMatrix.Mat4.fromTranslation(model_matrix, transformVector);
+
+                Selenium.Graphics.Shaders.SetUniform(
+                    'basic', 'm4_model_matrix', model_matrix);
+
+                GL.drawArrays(GL.TRIANGLES, 0, 6);
+            }
+        }
 
     });
 }
