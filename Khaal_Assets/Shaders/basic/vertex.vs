@@ -8,9 +8,9 @@ layout(location = 1) in vec4 color;
 out vec4 fragment_color;
 
 uniform mat4 m4_projection_matrix;
-uniform mat4 m4_view_matrix;
+uniform mat4 m4_view_matrix; // Unimplemented as of yet--on the list!
 
 void main() {
-  fragment_color = color;
-  gl_Position = m4_projection_matrix * position;
+    fragment_color = color;
+    gl_Position = m4_projection_matrix * position;
 }
