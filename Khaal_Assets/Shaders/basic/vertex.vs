@@ -12,6 +12,6 @@ uniform mat4 m4_projection_matrix;
 uniform mat4 m4_model_matrix;
 
 void main() {
-  fragment_color = color;
-  gl_Position = m4_projection_matrix * m4_model_matrix * position;
+    fragment_color = color;
+    gl_Position = m4_projection_matrix * m4_model_matrix * position;
 }
