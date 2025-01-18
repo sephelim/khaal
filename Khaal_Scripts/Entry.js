@@ -4,18 +4,18 @@ import {GLMatrix} from '../Selenium/Dependencies/GLMatrix.js';
 
 export async function Main() {
   await Selenium.Graphics.Shaders.Register('basic');
+  Selenium.Graphics.Shaders.Use('basic');
 
   const cube = new Selenium.Graphics.Basic.Cube({x: 200, y: 0, z: 0});
 
-  const lines_buffer =
-      Selenium.Graphics.Buffers.CreateVertexObject(new Float32Array([
-        0.0, 0.0, 0.0,   // origin
-        50.0, 0.0, 0.0,  // north
-        0.0, 0.0, 0.0,   // orgin
-        0.0, 50.0, 0.0,  // east
-        0.0, 0.0, 0.0,   // orgin
-        0.0, 0.0, 50.0,  // up
-      ]))[0];
+  const lines_buffer = Selenium.Graphics.Buffers.VO(new Float32Array([
+    0.0, 0.0, 0.0,   // origin
+    50.0, 0.0, 0.0,  // north
+    0.0, 0.0, 0.0,   // orgin
+    0.0, 50.0, 0.0,  // east
+    0.0, 0.0, 0.0,   // orgin
+    0.0, 0.0, 50.0,  // up
+  ]))[0];
   // A stride of 24 will skip color components.
   GL.vertexAttribPointer(0, 3, GL.FLOAT, false, 0, 0);
   GL.enableVertexAttribArray(0);
