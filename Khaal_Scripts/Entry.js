@@ -6,19 +6,22 @@ export async function Main() {
   await Selenium.Graphics.Shaders.Register('basic');
   Selenium.Graphics.Shaders.Use('basic');
 
-  const cube = new Selenium.Graphics.Basic.Cube({x: 200, y: 0, z: 0});
+  const cube = new Selenium.Graphics.Basic.Cube({x: 200, y: 0, z: 0}, 50);
 
   const lines_buffer = Selenium.Graphics.Buffers.VO(new Float32Array([
-    0.0, 0.0, 0.0,   // origin
-    50.0, 0.0, 0.0,  // north
-    0.0, 0.0, 0.0,   // orgin
-    0.0, 50.0, 0.0,  // east
-    0.0, 0.0, 0.0,   // orgin
-    0.0, 0.0, 50.0,  // up
+    0.0,  0.0,  0.0,  0.0, 0.0, 0.0,  // origin
+    50.0, 0.0,  0.0,  0.0, 0.0, 0.0,  // north
+    0.0,  0.0,  0.0,  0.0, 0.0, 0.0,  // orgin
+    0.0,  50.0, 0.0,  0.0, 0.0, 0.0,  // east
+    0.0,  0.0,  0.0,  0.0, 0.0, 0.0,  // orgin
+    0.0,  0.0,  50.0, 0.0, 0.0, 0.0,  // up
   ]))[0];
   // A stride of 24 will skip color components.
-  GL.vertexAttribPointer(0, 3, GL.FLOAT, false, 0, 0);
+  GL.vertexAttribPointer(0, 3, GL.FLOAT, false, 24, 0);
   GL.enableVertexAttribArray(0);
+
+  GL.vertexAttribPointer(1, 3, GL.FLOAT, false, 24, 12);
+  GL.enableVertexAttribArray(1);
 
   Selenium.RegisterRenderer(() => {
     Selenium.Graphics.ClearScreen(0.0, 0.0, 0.0);
@@ -35,10 +38,10 @@ export async function Main() {
       Selenium.Graphics.Shaders.SetUniform(
           'basic', 'm4_model_matrix', model_matrix);
       Selenium.Graphics.Shaders.SetUniform(
-          'basic', 'v3_model_color', GLMatrix.Vec3.fromValues(1.0, 1.0, 0.0));
+          'basic', 'v3_model_color', GLMatrix.Vec3.fromValues(0.0, 1.0, 0.0));
 
       GL.bindVertexArray(lines_buffer);
-      GL.drawArrays(GL.LINES, 0, 6)
+      GL.drawArrays(GL.LINES, 0, 6);
     }
   });
 }
