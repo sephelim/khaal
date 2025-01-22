@@ -6,8 +6,27 @@ export async function Main() {
   await Selenium.Graphics.Shaders.Register('basic');
   Selenium.Graphics.Shaders.Use('basic');
 
-  const cube = new Selenium.Graphics.Basic.Cube({x: 200, y: 0, z: 0});
+  const cube = new Selenium.Graphics.Basic.Cube({x: 500, y: 100, z: -25});
   const pyramid = new Selenium.Graphics.Basic.Pyramid({x: 500, y: 0, z: 0});
+
+  window.addEventListener('keydown', function(ev) {
+    switch (ev.key) {
+      case 'w':
+        Selenium.Graphics.Camera.MoveUp(5);
+        break;
+      case 's':
+        Selenium.Graphics.Camera.MoveDown(5);
+        break;
+      case 'a':
+        Selenium.Graphics.Camera.MoveLeft(5);
+        break;
+      case 'd':
+        Selenium.Graphics.Camera.MoveRight(5);
+        break;
+    }
+
+    Selenium.Graphics.Camera.SetView('basic');
+  });
 
   //! we need an arrow basic shape class
   const lines_buffer = Selenium.Graphics.Buffers.VO(new Float32Array([
@@ -25,8 +44,7 @@ export async function Main() {
   GL.vertexAttribPointer(1, 3, GL.FLOAT, false, 24, 12);
   GL.enableVertexAttribArray(1);
 
-  Selenium.Graphics.Shaders.SetUniform(
-      'basic', 'm4_view_matrix', Selenium.Graphics.Camera.Matrix);
+  Selenium.Graphics.Camera.SetView('basic');
 
   Selenium.RegisterRenderer(() => {
     Selenium.Graphics.ClearScreen(0.0, 0.0, 0.0);
