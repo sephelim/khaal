@@ -10,22 +10,21 @@ export async function Main() {
   const pyramid = new Selenium.Graphics.Basic.Pyramid({x: 500, y: 0, z: 0});
 
   window.addEventListener('keydown', function(ev) {
+    console.log(ev);
     switch (ev.key) {
       case 'w':
-        Selenium.Graphics.Camera.MoveUp(5);
+        Selenium.Graphics.Camera.Move(0, 0, -5);
         break;
       case 's':
-        Selenium.Graphics.Camera.MoveDown(5);
+        Selenium.Graphics.Camera.Move(0, 0, 5);
         break;
       case 'a':
-        Selenium.Graphics.Camera.MoveLeft(5);
+        Selenium.Graphics.Camera.Move(0, -5, -5 / 2);
         break;
       case 'd':
-        Selenium.Graphics.Camera.MoveRight(5);
+        Selenium.Graphics.Camera.Move(-5, 0, -5 / 2);
         break;
     }
-
-    Selenium.Graphics.Camera.SetView('basic');
   });
 
   //! we need an arrow basic shape class
