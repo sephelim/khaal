@@ -18,6 +18,10 @@
  */
 in highp vec3 fragment_position;
 /**
+ * The position of the scene's light. This is used for diffuse calculations.
+ */
+in highp vec3 light_position;
+/**
  * The calculated surface normal of the object. This is used for lighting
  * calculations.
  */
@@ -32,26 +36,24 @@ in lowp vec3 model_color;
  * The produced RGBA color for the screen fragment.
  */
 out lowp vec4 FragmentColor;
-/**
- * The position of the light in the scene. This is used for diffuse
- * lighting calculations.
- */
-lowp vec3 light_position = vec3(100,100,100);
 
 /**
  * The strength of the ambient light in the scene. This helps to offset straight
  * black in a nighttime environment, for example.
  */
-const lowp float ambient_strength = 1.0;
+const lowp float ambient_strength = 0.75;
 
 void main() {
-  highp vec3 light_direction = normalize(light_position - fragment_position);
-  highp float diff = max(dot(vertex_normal, light_direction), 0.0);
-  highp vec3 diffuse = diff * vec3(1.0, 1.0, 1.0);
-  highp vec3 result = (ambient_strength + diffuse) * model_color;
+    highp vec3 light_direction = normalize(light_position - fragment_position);
 
-  FragmentColor = vec4(result, 1.0);
-  if (false) {
-    FragmentColor = vec4(vertex_normal, 1.0);
-  }
+    highp float diff = max(dot(vertex_normal, light_direction), 0.0);
+    // The light is white-colored.
+    highp vec3 diffuse = diff * vec3(1.0, 1.0, 1.0);
+
+    highp vec3 result = (ambient_strength + diffuse) * model_color;
+    FragmentColor = vec4(result, 1.0);
+
+    if (false) {
+        FragmentColor = vec4(vertex_normal, 1.0);
+    }
 }
