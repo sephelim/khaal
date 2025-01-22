@@ -31,6 +31,11 @@ in mediump vec3 vertex_normal;
  * color.
  */
 in lowp vec3 model_color;
+/**
+ * If true the normals of the object will be shown. This is useful for
+ * debugging purposes.
+ */
+uniform bool b_show_normals;
 
 /**
  * The produced RGBA color for the screen fragment.
@@ -52,5 +57,7 @@ void main() {
 
     highp vec3 result = (ambient_strength + diffuse) * model_color;
     FragmentColor = vec4(result, 1.0);
-    // FragmentColor = vec4(vertex_normal, 1.0);
+
+    if (b_show_normals)
+     FragmentColor = vec4(vertex_normal, 1.0);
 }

@@ -50,7 +50,9 @@ export async function Main() {
     Selenium.Graphics.Shaders.SetUniform(
         'basic', 'm4_projection_matrix', Selenium.Graphics.Projection);
     Selenium.Graphics.Shaders.SetUniform(
-        'basic', 'v3_light_position', GLMatrix.Vec3.fromValues(50, 500, 50));
+      'basic', 'v3_light_position', GLMatrix.Vec3.fromValues(50, 500, 50));
+    Selenium.Graphics.Shaders.SetUniform(
+      'basic', 'b_show_normals', 0);
 
     cube.Render('basic');
     pyramid.Render('basic');
