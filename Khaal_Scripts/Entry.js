@@ -9,6 +9,7 @@ export async function Main() {
   const cube = new Selenium.Graphics.Basic.Cube({x: 200, y: 0, z: 0});
   const pyramid = new Selenium.Graphics.Basic.Pyramid({x: 500, y: 0, z: 0});
 
+  //! we need an arrow basic shape class
   const lines_buffer = Selenium.Graphics.Buffers.VO(new Float32Array([
     0.0,  0.0,  0.0,  1.0, 0.0, 0.0,  // origin
     50.0, 0.0,  0.0,  1.0, 0.0, 0.0,  // north
@@ -23,6 +24,9 @@ export async function Main() {
 
   GL.vertexAttribPointer(1, 3, GL.FLOAT, false, 24, 12);
   GL.enableVertexAttribArray(1);
+
+  Selenium.Graphics.Shaders.SetUniform(
+      'basic', 'm4_view_matrix', Selenium.Graphics.Camera.Matrix);
 
   Selenium.RegisterRenderer(() => {
     Selenium.Graphics.ClearScreen(0.0, 0.0, 0.0);

@@ -24,6 +24,10 @@ layout(location = 1) in mediump vec3 normal;
  */
 uniform highp mat4 m4_projection_matrix;
 /**
+ * The camera view matrix. Self-explanatory.
+ */
+uniform highp mat4 m4_view_matrix;
+/**
  * The matrix to be supplied for this specific model. This includes data like
  * rotation, position, ecetera.
  */
@@ -60,7 +64,7 @@ out highp vec3 light_position;
 out lowp vec3 model_color;
 
 void main() {
-    highp vec4 transformed_position = m4_model_matrix * 
+    highp vec4 transformed_position = m4_view_matrix * m4_model_matrix * 
         vec4(position, 1.0);
     fragment_position = transformed_position.xyz;
 
