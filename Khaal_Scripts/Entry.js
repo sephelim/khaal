@@ -1,20 +1,21 @@
 'use strict';
-import {Selenium} from '../Selenium/Selenium.js';
-import {GLMatrix} from '../Selenium/Dependencies/GLMatrix.js';
+import { Selenium } from '../Selenium/Selenium.js';
+import { GLMatrix } from '../Selenium/Dependencies/GLMatrix.js';
 
+let lightX = 0;
 export async function Main() {
   await Selenium.Graphics.Shaders.Register('basic');
   Selenium.Graphics.Shaders.Use('basic');
 
-  const cube = new Selenium.Graphics.Basic.Cube({x: 200, y: 0, z: 0}, 50);
+  const cube = new Selenium.Graphics.Basic.Cube({ x: 200, y: 0, z: 0 }, 50);
 
   const lines_buffer = Selenium.Graphics.Buffers.VO(new Float32Array([
-    0.0,  0.0,  0.0,  0.0, 0.0, 0.0,  // origin
-    50.0, 0.0,  0.0,  0.0, 0.0, 0.0,  // north
-    0.0,  0.0,  0.0,  0.0, 0.0, 0.0,  // orgin
-    0.0,  50.0, 0.0,  0.0, 0.0, 0.0,  // east
-    0.0,  0.0,  0.0,  0.0, 0.0, 0.0,  // orgin
-    0.0,  0.0,  50.0, 0.0, 0.0, 0.0,  // up
+    0.0, 0.0, 0.0, 1.0, 0.0, 0.0,  // origin
+    50.0, 0.0, 0.0, 1.0, 0.0, 0.0,  // north
+    0.0, 0.0, 0.0, 0.0, 1.0, 0.0,  // orgin
+    0.0, 50.0, 0.0, 0.0, 1.0, 0.0,  // east
+    0.0, 0.0, 0.0, 0.0, 0.0, 1.0,  // orgin
+    0.0, 0.0, 50.0, 0.0, 0.0, 1.0,  // up
   ]))[0];
   // A stride of 24 will skip color components.
   GL.vertexAttribPointer(0, 3, GL.FLOAT, false, 24, 0);
@@ -26,8 +27,9 @@ export async function Main() {
   Selenium.RegisterRenderer(() => {
     Selenium.Graphics.ClearScreen(0.0, 0.0, 0.0);
     Selenium.Graphics.Shaders.SetUniform(
-        'basic', 'm4_projection_matrix', Selenium.Graphics.Projection);
-
+      'basic', 'm4_projection_matrix', Selenium.Graphics.Projection);
+    Selenium.Graphics.Shaders.SetUniform(
+      'basic', 'u_light_location', GLMatrix.Vec3.fromValues(50,500,50));
     cube.Render('basic');
 
     if (Selenium.Data.Mode == 0) {
@@ -36,10 +38,7 @@ export async function Main() {
       GLMatrix.Mat4.fromTranslation(model_matrix, transformVector);
 
       Selenium.Graphics.Shaders.SetUniform(
-          'basic', 'm4_model_matrix', model_matrix);
-      Selenium.Graphics.Shaders.SetUniform(
-          'basic', 'v3_model_color', GLMatrix.Vec3.fromValues(0.0, 1.0, 0.0));
-
+        'basic', 'm4_model_matrix', model_matrix);
       GL.bindVertexArray(lines_buffer);
       GL.drawArrays(GL.LINES, 0, 6);
     }

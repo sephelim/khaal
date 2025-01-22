@@ -1,8 +1,8 @@
 #version 300 es
 /**
  * basic/fragment.fs
- * Sephelim
- * The basic fragment shader for any object. This includes calculations 
+ * Sephelim, Ian
+ * The basic fragment shader for any object. This includes calculations
  * for diffuse and ambient lighting.
  *
  * AGPLv3
@@ -32,19 +32,26 @@ in lowp vec3 model_color;
  * The produced RGBA color for the screen fragment.
  */
 out lowp vec4 FragmentColor;
+/**
+ * The position of the light in the scene. This is used for diffuse
+ * lighting calculations.
+ */
+lowp vec3 light_position = vec3(100,100,100);
 
 /**
  * The strength of the ambient light in the scene. This helps to offset straight
  * black in a nighttime environment, for example.
  */
-const lowp float ambient_strength = 0.35;
+const lowp float ambient_strength = 1.0;
 
-/**
- * The ambient/environmental light affecting this screen fragment.
- */
-const lowp vec3 ambient_light = ambient_strength * vec3(1.0, 1.0, 1.0);
+void main() {
+  highp vec3 light_direction = normalize(light_position - fragment_position);
+  highp float diff = max(dot(vertex_normal, light_direction), 0.0);
+  highp vec3 diffuse = diff * vec3(1.0, 1.0, 1.0);
+  highp vec3 result = (ambient_strength + diffuse) * model_color;
 
-void main()
-{
-    FragmentColor = vec4(ambient_light * model_color, 1.0);
+  FragmentColor = vec4(result, 1.0);
+  if (false) {
+    FragmentColor = vec4(vertex_normal, 1.0);
+  }
 }
