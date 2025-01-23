@@ -11,7 +11,7 @@
 
 ; Movement controls--these will move the camera regardless
 ; of shift, meta, control, whatever.
-KeyW=MoveCamera(up, 5)
+KeyW=MoveCamera(up)
 	; It matters not what this is set to, as long as it's here 
 	; the binding will be tolerant.
 	tolerant=true
