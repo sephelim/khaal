@@ -32,15 +32,6 @@ uniform highp mat4 m4_view_matrix;
  * rotation, position, ecetera.
  */
 uniform highp mat4 m4_model_matrix;
-/**
- * The position of the light in the scene. This is used for diffuse calculations.
- */
-uniform highp vec3 v3_light_position;
-/**
- * The passed-in global model color. This is a sort of "dye"--it is
- * mixed over any provided texture. This should be normalized.
- */
-uniform lowp vec3 v3_model_color;
 
 /**
  * The position of the current fragment onscreen. This is the vertex position
@@ -53,24 +44,13 @@ out highp vec3 fragment_position;
  * fragment shader.
  */
 out mediump vec3 vertex_normal;
-/**
- * The light position output to the fragment shader.
- */
-out highp vec3 light_position;
-/**
- * The color output to the fragment shader. This is used to calculate the color
- * of the current screen fragment, along with lighting effects.
- */
-out lowp vec3 model_color;
 
 void main() {
     highp vec4 transformed_position = m4_view_matrix * m4_model_matrix * 
         vec4(position, 1.0);
     fragment_position = transformed_position.xyz;
 
-    light_position = v3_light_position;
     vertex_normal = normal;
-    model_color = v3_model_color;
 
     gl_Position = m4_projection_matrix * transformed_position;
 }

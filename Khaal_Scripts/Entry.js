@@ -3,29 +3,32 @@ import {Selenium} from '../Selenium/Selenium.js';
 import {GLMatrix} from '../Selenium/Dependencies/GLMatrix.js';
 
 export async function Main() {
+  await Selenium.Input.Keyboard.LoadMap('default');
+  Selenium.Input.Keyboard.Enable();
+
   await Selenium.Graphics.Shaders.Register('basic');
   Selenium.Graphics.Shaders.Use('basic');
 
   const cube = new Selenium.Graphics.Basic.Cube({x: 500, y: 100, z: -25});
   const pyramid = new Selenium.Graphics.Basic.Pyramid({x: 500, y: 0, z: 0});
 
-  window.addEventListener('keydown', function(ev) {
-    console.log(ev);
-    switch (ev.key) {
-      case 'w':
-        Selenium.Graphics.Camera.Move(0, 0, -5);
-        break;
-      case 's':
-        Selenium.Graphics.Camera.Move(0, 0, 5);
-        break;
-      case 'a':
-        Selenium.Graphics.Camera.Move(0, -5, -5 / 2);
-        break;
-      case 'd':
-        Selenium.Graphics.Camera.Move(-5, 0, -5 / 2);
-        break;
-    }
-  });
+  //   window.addEventListener('keydown', function(ev) {
+  //     console.log(ev);
+  //     switch (ev.key) {
+  //       case 'w':
+  //         Selenium.Graphics.Camera.Move(0, 0, -5);
+  //         break;
+  //       case 's':
+  //         Selenium.Graphics.Camera.Move(0, 0, 5);
+  //         break;
+  //       case 'a':
+  //         Selenium.Graphics.Camera.Move(0, -5, -5 / 2);
+  //         break;
+  //       case 'd':
+  //         Selenium.Graphics.Camera.Move(-5, 0, -5 / 2);
+  //         break;
+  //     }
+  //   });
 
   //! we need an arrow basic shape class
   const lines_buffer = Selenium.Graphics.Buffers.VO(new Float32Array([
@@ -50,9 +53,8 @@ export async function Main() {
     Selenium.Graphics.Shaders.SetUniform(
         'basic', 'm4_projection_matrix', Selenium.Graphics.Projection);
     Selenium.Graphics.Shaders.SetUniform(
-      'basic', 'v3_light_position', GLMatrix.Vec3.fromValues(50, 500, 50));
-    Selenium.Graphics.Shaders.SetUniform(
-      'basic', 'b_show_normals', 0);
+        'basic', 'v3_light_position', GLMatrix.Vec3.fromValues(50, 500, 50));
+    Selenium.Graphics.Shaders.SetUniform('basic', 'b_show_normals', false);
 
     cube.Render('basic');
     pyramid.Render('basic');
