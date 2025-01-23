@@ -11,28 +11,9 @@
 
 ; Movement controls--these will move the camera regardless
 ; of shift, meta, control, whatever.
-KeyW=MoveCamera(up)
+KeyW=MoveCamera(up, 5)
 	; It matters not what this is set to, as long as it's here 
 	; the binding will be tolerant.
-	tolerant=true
-KeyA=MoveCamera(left)
-	tolerant=true
-KeyS=MoveCamera(down)
-	tolerant=true
-KeyD=MoveCamera(right)
-	tolerant=true
-ArrowUp=MoveCamera(up)
-	tolerant=true
-ArrowLeft=MoveCamera(left)
-	tolerant=true
-ArrowDown=MoveCamera(down)
-	tolerant=true
-ArrowRight=MoveCamera(right)
-	tolerant=true
-
-[Hold]
-
-KeyW=MoveCamera(up)
 	tolerant=true
 KeyA=MoveCamera(left)
 	tolerant=true
@@ -52,19 +33,19 @@ ArrowRight=MoveCamera(right)
 
 [Release]
 
-KeyW=StopCamera
+KeyW=StopCamera(up)
 	tolerant=true
-KeyA=StopCamera
+KeyA=StopCamera(left)
 	tolerant=true
-KeyS=StopCamera
+KeyS=StopCamera(down)
 	tolerant=true
-KeyD=StopCamera
+KeyD=StopCamera(right)
 	tolerant=true
-ArrowUp=StopCamera
+ArrowUp=StopCamera(up)
 	tolerant=true
-ArrowLeft=StopCamera
+ArrowLeft=StopCamera(left)
 	tolerant=true
-ArrowDown=StopCamera
+ArrowDown=StopCamera(down)
 	tolerant=true
-ArrowRight=StopCamera
+ArrowRight=StopCamera(right)
 	tolerant=true
