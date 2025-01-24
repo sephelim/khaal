@@ -31,7 +31,7 @@ export async function Main(gl) {
   gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 24, 12);
   gl.enableVertexAttribArray(1);
 
-  Selenium.Graphics.Camera.SetView('basic');
+  Selenium.Input.Camera.SetView('basic');
   Selenium.Graphics.Shaders.SetUniform(
       'basic', 'v3_light_position', GLMatrix.Vec3.fromValues(50, 500, 50));
 
