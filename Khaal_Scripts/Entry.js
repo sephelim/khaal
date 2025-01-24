@@ -2,7 +2,11 @@
 import {Selenium} from '../Selenium/Selenium.js';
 import {GLMatrix} from '../Selenium/Dependencies/GLMatrix.js';
 
-export async function Main() {
+/**
+ *
+ * @param {WebGL2RenderingContext} gl
+ */
+export async function Main(gl) {
   await Selenium.Input.Keyboard.LoadMap('default');
   Selenium.Input.Keyboard.Enable();
 
@@ -21,11 +25,11 @@ export async function Main() {
     0.0,  0.0,  50.0, 0.0, 0.0, 1.0,  // up
   ]))[0];
   // A stride of 24 will skip color components.
-  GL.vertexAttribPointer(0, 3, GL.FLOAT, false, 24, 0);
-  GL.enableVertexAttribArray(0);
+  gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 24, 0);
+  gl.enableVertexAttribArray(0);
 
-  GL.vertexAttribPointer(1, 3, GL.FLOAT, false, 24, 12);
-  GL.enableVertexAttribArray(1);
+  gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 24, 12);
+  gl.enableVertexAttribArray(1);
 
   Selenium.Graphics.Camera.SetView('basic');
   Selenium.Graphics.Shaders.SetUniform(
@@ -49,8 +53,8 @@ export async function Main() {
       Selenium.Graphics.Shaders.SetUniform(
           'basic', 'v3_model_color', GLMatrix.Vec3.fromValues(1.0, 0.25, 0.5));
 
-      GL.bindVertexArray(lines_buffer);
-      GL.drawArrays(GL.LINES, 0, 6);
+      gl.bindVertexArray(lines_buffer);
+      gl.drawArrays(gl.LINES, 0, 6);
     }
   });
 }
