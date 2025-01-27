@@ -18,7 +18,7 @@ export async function Main(gl) {
   const cube = new Selenium.Graphics.Basic.Cube({x: 500, y: 100, z: -25});
   const pyramid = new Selenium.Graphics.Basic.Pyramid({x: 500, y: 200, z: -25});
   await cube.SetBackground('placeholder.png');
-  await pyramid.SetBackground('placeholder.png');
+  await pyramid.SetBackground('placeholder2.png');
 
   //! we need an arrow basic shape class
   const lines_buffer = Selenium.Graphics.Buffers.VO(new Float32Array([
