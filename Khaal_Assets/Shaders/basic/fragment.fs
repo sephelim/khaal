@@ -22,6 +22,11 @@ uniform highp vec3 v3_light_position;
  */
 uniform lowp vec3 v3_model_color;
 /**
+ * The actual texture image we're sampling to get the color of this
+ * fragment.
+ */
+uniform sampler2D s2_texture_sampler;
+/**
  * If true the normals of the object will be shown. This is useful for
  * debugging purposes.
  */
@@ -37,11 +42,15 @@ in highp vec3 fragment_position;
  * calculations.
  */
 in mediump vec3 vertex_normal;
+/**
+ * The (R, S) coordinates of the fragment's texture.
+ */
+in highp vec2 vertex_texture;
 
 /**
  * The produced RGBA color for the screen fragment.
  */
-out lowp vec4 FragmentColor;
+out lowp vec4 fragment_color;
 
 /**
  * The strength of the ambient light in the scene. This helps to offset straight
@@ -50,15 +59,16 @@ out lowp vec4 FragmentColor;
 const lowp float ambient_strength = 0.75;
 
 void main() {
-    highp vec3 light_direction = normalize(v3_light_position - fragment_position);
+    if (b_show_normals) {
+        fragment_color = vec4(vertex_normal, 1.0);
+        return;
+    }
 
+    highp vec3 light_direction = normalize(v3_light_position - fragment_position);
     highp float diff = max(dot(vertex_normal, light_direction), 0.0);
     // The light is white-colored.
     highp vec3 diffuse = diff * vec3(1.0, 1.0, 1.0);
 
-    highp vec3 result = (ambient_strength + diffuse) * v3_model_color;
-    FragmentColor = vec4(result, 1.0);
-
-    if (b_show_normals)
-     FragmentColor = vec4(vertex_normal, 1.0);
+    highp vec4 color = vec4((ambient_strength + diffuse) * v3_model_color, 1.0);
+    fragment_color = texture(s2_texture_sampler, vertex_texture) * color;
 }

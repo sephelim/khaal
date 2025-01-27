@@ -16,6 +16,8 @@
 layout(location = 0) in highp vec3 position;
 // The (U, V, W) normal of the vertex.
 layout(location = 1) in mediump vec3 normal;
+// The (R, S) texture coordinates of the vertex.
+layout(location = 2) in lowp vec2 texture;
 
 /**
  * The projection matrix of the scene. Every vertex is passed through
@@ -44,6 +46,11 @@ out highp vec3 fragment_position;
  * fragment shader.
  */
 out mediump vec3 vertex_normal;
+/**
+ * The texture coordinates of this vertex. This is provided for texture 
+ * positioning within the fragment shader.
+ */
+out highp vec2 vertex_texture;
 
 void main() {
     highp vec4 transformed_position = m4_view_matrix * m4_model_matrix * 
@@ -51,6 +58,7 @@ void main() {
     fragment_position = transformed_position.xyz;
 
     vertex_normal = normal;
+    vertex_texture = texture;
 
     gl_Position = m4_projection_matrix * transformed_position;
 }
