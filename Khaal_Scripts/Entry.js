@@ -15,10 +15,10 @@ export async function Main(gl) {
 
   //! need global texture table to save memory!
 
-  const cube = new Selenium.Graphics.Basic.Cube(
-      {x: 500, y: 100, z: -25}, undefined, undefined, 'placeholder.png');
-  const pyramid = new Selenium.Graphics.Basic.Pyramid(
-      {x: 500, y: 200, z: -25}, undefined, undefined, 'placeholder.png');
+  const cube = new Selenium.Graphics.Basic.Cube({x: 500, y: 100, z: -25});
+  const pyramid = new Selenium.Graphics.Basic.Pyramid({x: 500, y: 200, z: -25});
+  await cube.SetBackground('placeholder.png');
+  await pyramid.SetBackground('placeholder.png');
 
   //! we need an arrow basic shape class
   const lines_buffer = Selenium.Graphics.Buffers.VO(new Float32Array([
