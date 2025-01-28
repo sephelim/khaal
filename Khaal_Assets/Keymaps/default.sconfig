@@ -30,6 +30,8 @@ ArrowDown=MoveCamera(down)
 ArrowRight=MoveCamera(right)
 	tolerant=true
 
+KeyZ=Scale(up)
+KeyX=Scale(down)
 
 [Release]
 

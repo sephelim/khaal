@@ -13,9 +13,9 @@ export async function Main(gl) {
 
   await Selenium.Assets.Shaders.Register('basic');
   await Selenium.Assets.Shaders.Register('text');
-  Selenium.Assets.Shaders.Use('basic');
+  await Selenium.Assets.Fonts.Register('kongtext-16');
 
-  Selenium.Assets.Fonts.Register('kongtext-16');
+  Selenium.Assets.Shaders.Use('basic');
 
   const cube = new Selenium.Graphics.Basic.Cube({x: 500, y: 100, z: -25});
   const pyramid = new Selenium.Graphics.Basic.Pyramid({x: 500, y: 200, z: -25});
@@ -51,7 +51,7 @@ export async function Main(gl) {
     cube.Render('basic');
     pyramid.Render('basic');
     Selenium.Graphics.Text.RenderString(
-        '', '', {x: 250, y: 250, z: 0}, {r: 255, g: 0, b: 0});
+        '', '', {x: 250, y: 250, z: 0}, {r: 255, g: 255, b: 0});
 
     if (Selenium.Data.Mode == 0) {
       const model_matrix = GLMatrix.Mat4.create();
