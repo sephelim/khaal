@@ -7,13 +7,15 @@ import {GLMatrix} from '../Selenium/Dependencies/GLMatrix.js';
  * @param {WebGL2RenderingContext} gl
  */
 export async function Main(gl) {
+  console.log(Selenium);
   await Selenium.Input.Keyboard.LoadMap('default');
   Selenium.Input.Keyboard.Enable();
 
   await Selenium.Assets.Shaders.Register('basic');
+  await Selenium.Assets.Shaders.Register('text');
   Selenium.Assets.Shaders.Use('basic');
 
-  //! need global texture table to save memory!
+  Selenium.Assets.Fonts.Register('kongtext-16');
 
   const cube = new Selenium.Graphics.Basic.Cube({x: 500, y: 100, z: -25});
   const pyramid = new Selenium.Graphics.Basic.Pyramid({x: 500, y: 200, z: -25});
@@ -46,8 +48,10 @@ export async function Main(gl) {
         'basic', 'm4_projection_matrix', Selenium.Graphics.Projection);
     Selenium.Assets.Shaders.SetUniform('basic', 'b_show_normals', false);
 
-    cube.Render('basic');  //? why gone when second shape
+    cube.Render('basic');
     pyramid.Render('basic');
+    Selenium.Graphics.Text.RenderString(
+        '', '', {x: 250, y: 250, z: 0}, {r: 255, g: 0, b: 0});
 
     if (Selenium.Data.Mode == 0) {
       const model_matrix = GLMatrix.Mat4.create();
